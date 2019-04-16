@@ -10,7 +10,7 @@
 
 * 二、采用redis缓存，工具包：RedisServiceUtils,采用@Autowired、@Resource注入
 
-* 三、SwaggerUI接口调试：http://localhost:8889/swagger-ui.html
+* 三、SwaggerUI接口调试：http://localhost:8889/swagger-ui.html 
 
 * 四、集成Shiro安全框架做安全验证，通过：CurrentUser()获取当前登录用户信息，CurrentUser.id()获取id，
 其他属性可在 CurrentUser.class 中进行配置
