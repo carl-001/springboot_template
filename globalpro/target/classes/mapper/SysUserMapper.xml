@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.global.api.dao.system.SysUserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.global.api.entity.system.SysUser">
+        <id column="userId" property="userId"/>
+        <result column="userName" property="userName"/>
+        <result column="loginName" property="loginName"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="version" property="version"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+          userId, userName, loginName, password, salt, version, created_by AS createdBy, created_time AS createdTime, update_by AS updateBy, update_time AS updateTime, status
+    </sql>
+
+    <!-- 根据id获取数据 -->
+    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where 1=1
+        and userId = #{id}
+    </select>
+
+    <select id="getRole" parameterType="java.lang.String" resultType="java.lang.String">
+        select sr.roleName from sys_user s
+        left join sys_role sr on s.roleid = sr.roleid
+        where s.login_name =#{loginName} and s.status =1
+    </select>
+
+</mapper>

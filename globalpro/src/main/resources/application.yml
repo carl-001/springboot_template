@@ -1,0 +1,58 @@
+#端口
+server:
+  port: 8889
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+#MongoDb
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/ajtLocation
+  datasource:
+    url: jdbc:mysql://localhost:3306/globalpro?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: 123
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 5
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    timeout: 5000
+    type: com.alibaba.druid.pool.DruidDataSource
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+  main:
+      allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+
+#Mybatis
+#mybatis:
+#  typeAliasesPackage: com.global.api.entity
+#  mapperLocations: classpath:mapper/*.xml
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.com.global.api.entity
+
+#日志
+logging:
+  level:
+    com.zhent.dao.*: debug
+  path: D:/globalpro/log
+#分页插件
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+
+

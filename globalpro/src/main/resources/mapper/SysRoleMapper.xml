@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.global.api.dao.system.SysRoleDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.global.api.entity.system.SysRole">
+                <id column="roleId" property="roleId"/>
+                <result column="roleName" property="roleName"/>
+                <result column="status" property="status"/>
+                <result column="remarks" property="remarks"/>
+                <result column="created_by" property="createdBy"/>
+                <result column="created_time" property="createdTime"/>
+                <result column="updated_by" property="updatedBy"/>
+                <result column="updated_time" property="updatedTime"/>
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+          roleId, roleName, status, remarks, created_by AS createdBy, created_time AS createdTime, updated_by AS updatedBy, updated_time AS updatedTime
+    </sql>
+
+    <!-- 根据id获取数据 -->
+    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role where 1=1
+                and roleId = #{id}
+    </select>
+
+</mapper>

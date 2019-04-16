@@ -1,0 +1,30 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.plugins.Page;
+import java.util.Map;
+
+/**
+ * <p>
+ * ${table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+    boolean save${entity}(${entity} item);
+
+    ${entity} get(@Param("id") String id);
+
+    boolean delete(@Param("id") String id);
+
+    List<${entity}> selectList();
+
+    List<${entity}> findByPage(Map<String,String> map, Page<${entity}> page);
+
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.global.api.dao.system.SysLogDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.global.api.entity.system.SysLog">
+                <id column="logId" property="logId"/>
+                <result column="logTitle" property="logTitle"/>
+                <result column="ip" property="ip"/>
+                <result column="userName" property="userName"/>
+                <result column="requstUrl" property="requstUrl"/>
+                <result column="httpMethod" property="httpMethod"/>
+                <result column="classMethod" property="classMethod"/>
+                <result column="sessionId" property="sessionId"/>
+                <result column="response" property="response"/>
+                <result column="useTime" property="useTime"/>
+                <result column="browser" property="browser"/>
+                <result column="area" property="area"/>
+                <result column="province" property="province"/>
+                <result column="city" property="city"/>
+                <result column="params" property="params"/>
+                <result column="created_by" property="createdBy"/>
+                <result column="created_time" property="createdTime"/>
+                <result column="updated_by" property="updatedBy"/>
+                <result column="ppdated_time" property="ppdatedTime"/>
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+          logId, logTitle, ip, userName, requstUrl, httpMethod, classMethod, sessionId, response, useTime, browser, area, province, city, params, created_by AS createdBy, created_time AS createdTime, updated_by AS updatedBy, ppdated_time AS ppdatedTime
+    </sql>
+
+    <!-- 根据id获取数据 -->
+    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_log where 1=1
+                and logId = #{id}
+    </select>
+
+</mapper>

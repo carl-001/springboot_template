@@ -1,0 +1,55 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.List;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import java.util.Map;
+import com.baomidou.mybatisplus.plugins.Page;
+
+/**
+ * <p>
+ * ${table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+     @Override
+     public List<${entity}> selectList(){
+        EntityWrapper<${entity}> wrapper = new EntityWrapper<>();
+        return baseMapper.selectList(wrapper);
+     }
+
+     @Override
+     public List<${entity}> findByPage(Map<String,String> map, Page<${entity}> page) {
+        return baseMapper.findByPage(map,page);
+     }
+
+     @Override
+     public ${entity} get(String id){
+        return baseMapper.get(id);
+     }
+
+     @Override
+     public boolean save${entity}(${entity} item){
+        insertOrUpdateAllColumn(item);
+        return true;
+     }
+
+     @Override
+     public boolean delete(String id){
+        baseMapper.deleteById(id);
+        return true;
+     }
+
+}

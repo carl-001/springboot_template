@@ -1,0 +1,116 @@
+package ${package.Controller};
+
+import com.global.annotation.Log;
+import io.swagger.annotations.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import com.global.utils.LayerData;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
+import java.util.Map;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import java.util.HashMap;
+import com.baomidou.mybatisplus.plugins.Page;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMethod;
+import com.global.api.vo.RequestModel;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * ${table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Controller
+@Api(tags = "${table.controllerName}", description = "${table.comment}控制器")
+@RequestMapping("/api/${cfg.modules}/${entity}")
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private ${table.serviceName} service;
+
+    /***
+     * 查询列表
+     */
+    @Log("查询${table.comment}列表")
+    @RequestMapping(value = "getlist", method = RequestMethod.POST)
+    @ApiOperation(value = "查询列表", notes = "分页查询列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "limit", required = true, dataType = "String", paramType = "query")
+    })
+    @ResponseBody
+    public LayerData<${entity}> list(@RequestBody @ApiParam(name = "model", required = true) RequestModel requestModel,
+                                     @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                     @RequestParam(value = "limit", defaultValue = "10") Integer limit,
+                                     HttpServletRequest request){
+        Map map = WebUtils.getParametersStartingWith(request, "s_");
+        LayerData<${entity}> LayerData = new LayerData<>();
+        EntityWrapper<${entity}> wrapper = new EntityWrapper<>();
+        Page<${entity}> logPage = service.selectPage(new Page<>(page, limit), wrapper);
+        LayerData.setCount(logPage.getTotal());
+        LayerData.setData(logPage.getRecords());
+        return  LayerData;
+    }
+
+    /***
+     * 根据id查询
+     */
+    @Log("根据id查询${table.comment}")
+    @RequestMapping(value = "get", method = RequestMethod.POST)
+    @ApiOperation(value = "根据id查询", notes = "根据id查询")
+    @ApiImplicitParam(name = "id", required = true, dataType = "String", paramType = "query")
+    @ResponseBody
+    public ${entity} get(@RequestBody @ApiParam(name = "model", required = true) RequestModel requestModel, String id){
+       ${entity} result = service.get(id);
+       return result;
+    }
+
+    /***
+     * 保存或修改
+     */
+    @Log("保存或修改${table.comment}")
+    @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
+    @ApiOperation(value = "保存或修改", notes = "保存或修改")
+    @ResponseBody
+    public Boolean save${entity}(@RequestBody @ApiParam(name = "${entity}", required = true) RequestModel<${entity}> obj){
+        service.save${entity}(obj.getData());
+        return true;
+    }
+
+    /***
+     * 删除
+     */
+    @Log("删除${table.comment}")
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @ApiOperation(value = "删除", notes = "删除")
+    @ApiImplicitParam(name = "id", required = true, dataType = "String", paramType = "query")
+    @ResponseBody
+    public Boolean delete(@RequestBody @ApiParam(name = "model", required = true) RequestModel requestModel, String id){
+       service.delete(id);
+       return true;
+    }
+
+}
